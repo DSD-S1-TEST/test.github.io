@@ -21,7 +21,7 @@ function Navbar() {
       position: 'sticky', top: 0, zIndex: 100
     }} className="cyber-font">
       <div style={{ fontWeight: 'bold', marginRight: 'auto', textShadow: '0 0 8px var(--primary-glow)' }}>
-        DSD-S1-TEST
+        DSD-S1
       </div>
       <Link className={`nav-link ${isActive('/')}`} to="/">[ HOME ]</Link>
       <Link className={`nav-link ${isActive('/progress')}`} to="/progress">[ PROGRESS ]</Link>
@@ -46,7 +46,7 @@ export default function App() {
         </Routes>
       </div>
       <footer style={{ textAlign: 'center', padding: '2rem', borderTop: '1px solid rgba(0, 240, 255, 0.2)', color: 'var(--text-muted)' }} className="cyber-font">
-        DSD-S1-TEST<br/>
+        DSD-S1<br/>
         © {new Date().getFullYear()}
       </footer>
     </HashRouter>
