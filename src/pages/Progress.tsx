@@ -33,8 +33,8 @@ export default function Progress() {
 
   return (
     <div>
-      <h1 className="cyber-font" style={{ color: 'var(--primary-glow)' }}>&gt; SYSTEM.PROGRESS_</h1>
-      <p style={{ color: 'var(--text-muted)' }}>任务调度甘特图面板：</p>
+      <h1 style={{ margin: '0 0 1rem 0' }}>Progress</h1>
+      <p style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>Project Schedule:</p>
       <div className="card" style={{ overflowX: 'auto' }}>
         <pre className="mermaid" ref={chartRef}>
           {chartDef}

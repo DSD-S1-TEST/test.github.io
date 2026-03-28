@@ -27,9 +27,8 @@ export default function NewsDetail() {
 
   return (
     <div>
-      <h1 className="cyber-font" style={{ color: 'var(--primary-glow)' }}>&gt; ROOT/NEWS/{id}.md</h1>
-      <button className="btn" onClick={() => navigate('/news')} style={{ marginBottom: '1rem' }}>
-        &lt; 返回上一级
+      <button className="btn" onClick={() => navigate('/news')} style={{ marginBottom: '2rem' }}>
+        &lt; Back to News
       </button>
       <div className="card markdown-body" style={{ animation: 'flicker 1s forwards' }}>
         <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>

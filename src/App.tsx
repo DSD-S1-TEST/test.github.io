@@ -1,5 +1,4 @@
 import { HashRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
-
 import Home from './pages/Home';
 import Progress from './pages/Progress';
 import NewsList from './pages/NewsList';
@@ -21,8 +20,8 @@ function Navbar() {
       boxShadow: '0 4px 30px rgba(0,0,0,0.5)',
       position: 'sticky', top: 0, zIndex: 100
     }} className="cyber-font">
-      <div style={{ color: 'var(--primary-glow)', fontWeight: 'bold', marginRight: 'auto', textShadow: '0 0 8px var(--primary-glow)' }}>
-        SYS_OS // ONLINE
+      <div style={{ fontWeight: 'bold', marginRight: 'auto', textShadow: '0 0 8px var(--primary-glow)' }}>
+        DSD-S1-TEST
       </div>
       <Link className={`nav-link ${isActive('/')}`} to="/">[ HOME ]</Link>
       <Link className={`nav-link ${isActive('/progress')}`} to="/progress">[ PROGRESS ]</Link>
@@ -47,8 +46,8 @@ export default function App() {
         </Routes>
       </div>
       <footer style={{ textAlign: 'center', padding: '2rem', borderTop: '1px solid rgba(0, 240, 255, 0.2)', color: 'var(--text-muted)' }} className="cyber-font">
-        DSD-S1-TEST // SECURE TERMINAL<br/>
-        © {new Date().getFullYear()} ORGANIZATION
+        DSD-S1-TEST<br/>
+        © {new Date().getFullYear()}
       </footer>
     </HashRouter>
   );

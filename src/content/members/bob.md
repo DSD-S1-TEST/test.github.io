@@ -1,10 +1,10 @@
 ---
 name: "Bob"
-role: "系统架构 / DevOps"
+role: "System Architecture / DevOps"
 avatar: "👨‍🔧"
 skills: "GitHub Actions, Node.js, Vite"
 ---
-# Bob 探员履历
+# Bob Profile
 
-专注于流程自动化与工程基建。
-维护着这个项目的血液和呼吸。
+Focused on process automation and engineering infrastructure.
+Maintaining the lifeblood and systems of this project.
