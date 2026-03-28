@@ -1,73 +1,68 @@
-# React + TypeScript + Vite
+# DSD-S1 Team Frontend Hub
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a completely Markdown-driven, decentralized static site built for the DSD-S1 team. It is designed so that non-developers can easily maintain the website contents intuitively using pure Markdown files, complete with metadata parsing (YAML front-matter) and automated dynamic data-visualization (Mermaid.js).
 
-Currently, two official plugins are available:
+## 🛠 Technology Stack & Version Information
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Below is the exhaustive list of the core technologies, libraries, and their respective versions used in this project:
 
-## React Compiler
+### Framework & Build Tool
+- **React**: `v19.2.4` (Core frontend library for building the UI components)
+- **Vite**: `v8.0.1` (Next-generation frontend tooling and bundler)
+- **TypeScript**: `~5.9.3` (Statically typed JavaScript to ensure type safety)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Dependencies & Core Logic
+- **React Router DOM**: `v7.13.2` (Handles routing and Single Page Application navigation)
+- **React Markdown**: `v10.1.0` (Renders the core `.md` databases safely into React components)
+- **Remark-GFM**: `v4.0.1` (Plugin for `react-markdown` to support GitHub Flavored Markdown features like tables and strikethroughs)
+- **Front-Matter**: `^4.0.2` (Extracts YAML metadata block from Markdown files, used for content attributes like title, date, etc.)
+- **Mermaid**: `v11.13.0` (JavaScript based diagram and charting tool, specifically used here to parse dynamic Markdown Gantt charts natively).
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🚀 Local Environment Setup and Execution
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+To run, inspect, and modify this completely locally, follow the steps below:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Prerequisites
+Make sure you have `Node.js` installed on your local environment.
+- **Node.js**: (Recommended `v18.0.0` or higher)
+- **npm**: Comes directly with Node.js.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 1. Clone the repository
+Navigate to a proper folder on your system and clone the repository locally:
+```bash
+git clone git@github.com:DSD-S1-TEST/DSD-S1.github.io.git
+cd DSD-S1.github.io
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 2. Install Dependencies
+Install all the necessary backend scripts and React library dependencies listed above. Do not use `npm ci` unless you are matching the exact package-lock synchronization on CI/CD! For standard local installation, use:
+```bash
+npm install
 ```
+
+### 3. Run the Local Development Server
+To launch the Hot-Module-Replacement (HMR) local developer environment, run:
+```bash
+npm run dev
+```
+By default, the Vite server will expose the application on `http://localhost:5173/`. Open your browser and navigate to this URL to see the live site!
+
+### 4. Build for Production
+When making production releases manually, or testing the built distributables:
+```bash
+npm run build
+```
+This runs the typescript compiler (`tsc -b`) and bundles the static site dependencies to `/dist`. You can test this built bundle using `npm run preview`.
+
+---
+
+## 📝 Content Maintenance
+
+You can easily modify what the site displays without reading a single line of React code!
+
+- **HomePage Config**: Edit `src/content/home/index.md`.
+- **Progress Tracking**: Edit `src/content/progress/gantt.md` (It directly renders Mermaid Gantt logic).
+- **News/Updates**: Add `.md` files to `src/content/news/` containing proper YAML front-matter (`title`, `date`, `author`).
+- **Team Members**: Add `.md` files to `src/content/members/` maintaining the structure for staff profiles and avatars.
