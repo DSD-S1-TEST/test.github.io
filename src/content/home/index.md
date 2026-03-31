@@ -1,16 +1,22 @@
 # DSD-S1-TEST Frontend
 
-Welcome to the **DSD-S1-TEST** development hub.
+Welcome to the **DSD-S1-TEST** development hub.  
 This site is powered by static Markdown files for efficient collaboration.
 
-## Core Features
-- 🚀 **Static Generation**: Vite + React for ultimate speed.
-- 📝 **Markdown Driven**: Organization members simply submit \`.md\` files to publish news or update progress.
-- 📊 **Diagrams as Code**: Built-in Mermaid parser for easy Gantt chart rendering.
-- 🤖 **Automated Deployment**: One-click push triggers GitHub Actions for serverless deployment.
+## Project Introduction
 
-## Navigation Guide
+**Limb Motion Recognition and Assistant**  
+*Distributed Software Development — UTAD × Jilin University 2025–2026*
+
+This is a collaborative international project between the University of Trás-os-Montes e Alto Douro (**UTAD**, Portugal) and Jilin University (**JLU**, China).
+
+The goal is to develop an intelligent assistive system that supports patients during limb rehabilitation exercises. Wireless sensors capture real-time joint motion data from the patient’s limb. This data is processed by AI models for motion recognition and analysis. The system then provides immediate feedback through a **patient mobile application** and long-term recovery insights via a **clinical web dashboard**.
+
+The entire system is designed for modular, parallel development across distributed teams, ensuring smooth collaboration between the two universities.
+
+Navigation Guide
 Use the top navigation bar to explore the data archives:
-* \`[News]\` - Project announcements and update logs.
-* \`[Progress]\` - Visualized progress charts of the architecture.
-* \`[Members]\` - Profiles and roles of the development team.
+
+News - Project announcements and update logs.
+Progress - Visualized progress charts of the architecture.
+Members - Profiles and roles of the development team.
