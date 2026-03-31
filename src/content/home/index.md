@@ -14,9 +14,11 @@ The goal is to develop an intelligent assistive system that supports patients du
 
 The entire system is designed for modular, parallel development across distributed teams, ensuring smooth collaboration between the two universities.
 
-Navigation Guide
+## Navigation Guide
 Use the top navigation bar to explore the data archives:
 
 News - Project announcements and update logs.
+
 Progress - Visualized progress charts of the architecture.
+
 Members - Profiles and roles of the development team.
