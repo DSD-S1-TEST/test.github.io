@@ -1,4 +1,3 @@
-draft
 gantt
     title DSD-S1-TEST Development Schedule
     dateFormat  YYYY-MM-DD
