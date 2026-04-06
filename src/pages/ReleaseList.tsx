@@ -19,7 +19,7 @@ export default function ReleaseList() {
       
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
         {releases.map(release => (
-          <div key={release.id} className="card" style={{ display: 'block', padding: '1.5rem' }}>
+          <Link key={release.id} to={`/releases/${release.id}`} className="card hoverable" style={{ display: 'block', padding: '1.5rem', textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '1rem' }}>
               <h2 style={{ margin: 0, fontSize: '1.25rem', color: 'var(--primary-glow)' }}>{release.title}</h2>
               <span style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>{release.date}</span>
@@ -27,11 +27,11 @@ export default function ReleaseList() {
             <p style={{ marginBottom: '1rem', color: 'var(--text-color)' }}>{release.summary}</p>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span style={{ fontSize: '0.875rem', color: '#ff003c' }}>Publisher: {release.publisher}</span>
-              <Link to={`/releases/${release.id}`} style={{ color: 'var(--primary-color)', textDecoration: 'none', borderBottom: '1px dashed var(--primary-color)' }}>
+              <span style={{ color: 'var(--primary-glow)', borderBottom: '1px dashed var(--primary-glow)' }}>
                 [ Read More ]
-              </Link>
+              </span>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
