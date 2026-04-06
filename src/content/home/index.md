@@ -36,3 +36,10 @@ Visualized progress charts of the architecture
 Profiles and roles of the development team
 
 [→ Go to Members](./#/members)
+
+---
+
+### 📦 **Releases**
+Download project deliverables and review iteration summaries
+
+[→ Go to Releases](./#/releases)

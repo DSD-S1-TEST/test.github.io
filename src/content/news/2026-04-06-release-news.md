@@ -1,13 +1,11 @@
 ---
-title: "重磅: 第一阶段(Sprint 1)已成功交付！"
+title: "Add release to our web"
 date: "2026-04-06"
-author: "System Admin"
-summary: "我们非常高兴地宣布，第一阶段的前后端基础架构已经搭建完成，您可以前往 Release 页面查下载附件。"
+author: "Derui Tang"
+summary: "We have launched the release module to release our project or report."
 ---
-# Sprint 1 顺利完成！
+# Sprint 1 completed
 
-历经数周的开发，我们终于迎来了第一个成果发布节点。
+Our web now has launched the release module.
 
-👉👉👉 [点击这里跳转到 Sprint 1 发布页，下载 PDF 评审报告](#/releases/sprint-1) 👈👈👈
-
-同时，这篇新闻也宣告了我们的 **平级的发布页模块 (Releases)** 的正式上线。
+You can click [here](#/releases/) to see the release module.
