@@ -1,11 +1,13 @@
 ---
-title: "The requirement analysis is released"
+title: "Milestone Reached: Initial Software Requirement Analysis Released"
 date: "2026-04-06"
 author: "Derui Tang"
-summary: "We have released our project's requirement analysis. Click to see more."
+summary: "We are proud to announce the publication of our first Software Requirements Specification (SRS), outlining the core use cases and system architecture."
 ---
-# Requirement analysis completed
+# First Draft of Requirement Analysis Completed
 
-We have completed our first version of requirement analysis.
+After extensive collaboration and group discussions, our cross-cultural team has successfully finalized the initial version of the Software Requirement Analysis for the Limb Motion Recognition and Assistant project.
 
-To see more details about the analysis, please click [here](#/releases/sprint-requirement-1) to see more.
+This critical deliverable establishes a solid foundation for our wireless sensor integration, communication protocols, and system interfaces. It clearly details the essential system use cases—such as user registration and sensor connection—ensuring that all distributed team members share a unified engineering vision for Sprint 1.
+
+👉 [Click here to review the full Sprint 1 Requirements Specification](#/releases/sprint-requirement-1)

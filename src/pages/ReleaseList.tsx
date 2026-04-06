@@ -14,7 +14,7 @@ export default function ReleaseList() {
 
   return (
     <div>
-      <h1 style={{ margin: '0 0 1.5rem 0' }}>交付发布 (Releases)</h1>
+      <h1 style={{ margin: '0 0 1.5rem 0' }}>Releases</h1>
       <p style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>Team delivery history & resources.</p>
       
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
@@ -28,7 +28,7 @@ export default function ReleaseList() {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span style={{ fontSize: '0.875rem', color: '#ff003c' }}>Publisher: {release.publisher}</span>
               <Link to={`/releases/${release.id}`} style={{ color: 'var(--primary-color)', textDecoration: 'none', borderBottom: '1px dashed var(--primary-color)' }}>
-                [ Read More / 下载附件 ]
+                [ Read More ]
               </Link>
             </div>
           </div>

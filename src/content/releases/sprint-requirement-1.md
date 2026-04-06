@@ -1,12 +1,12 @@
 ---
-title: "Requirement analysis version 0.1"
+title: "Requirement analysis version 0.1 (draft)"
 date: "2026-04-06"
 publisher: "Admin"
-summary: "We released the first version of our project's requirement analysis."
+summary: "Sprint 1 release of the preliminary Software Requirements Specification (SRS), detailing core use cases and the IF1 Interface Contract for the wireless motion capture system."
 ---
-# Requirement analysis completed
+# Requirement Analysis & System Specification (Sprint 1)
 
-## The whole analysis is as follows.
+## Core Requirements and Architectural Overview
 
 ### Software Requirements Specification (Draft)
 
@@ -16,7 +16,6 @@ Revision History:
 | :--- | :--- | :--- |
 | Apr 1 | Zhihang Yu | Draft User Register details |
 | Apr 3 | Zhihang Yu, Derui Tang, Haoqi Sheng, Mofan Xu, Silva André | Held group meeting to finalize project roadmap, wireless sensor implementation, and Sprint 1 core deliverables |
-| Apr 5 | Derui Tang | Add initial use cases and framework |
 
 #### 0. Background
 

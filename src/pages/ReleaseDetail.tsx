@@ -20,7 +20,7 @@ export default function ReleaseDetail() {
   return (
     <div className="card">
       <Link to="/releases" style={{ display: 'inline-block', marginBottom: '2rem', color: 'var(--text-muted)' }}>
-        ← 返回发布列表 (Back to Releases)
+        ← (Back to Releases)
       </Link>
       
       <h1 style={{ color: 'var(--primary-glow)', marginBottom: '0.5rem' }}>{attributes.title}</h1>
@@ -35,13 +35,13 @@ export default function ReleaseDetail() {
         <div style={{ padding: '1rem', background: 'rgba(0, 240, 255, 0.05)', borderRadius: '4px', marginBottom: '2rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
           {attributes.pdf_url && (
             <a href={attributes.pdf_url} download style={{ display: 'inline-block', padding: '0.5rem 1rem', background: 'rgba(0, 240, 255, 0.1)', border: '1px solid var(--primary-glow)', color: 'var(--primary-glow)', textDecoration: 'none', borderRadius: '4px' }}>
-              📥 下载 PDF 报告 / Download PDF
+              📥 Download PDF
             </a>
           )}
           
           {attributes.github_url && (
             <a href={attributes.github_url} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', padding: '0.5rem 1rem', background: 'rgba(255, 0, 60, 0.1)', border: '1px solid rgba(255, 0, 60, 0.5)', color: '#ff003c', textDecoration: 'none', borderRadius: '4px' }}>
-              🐙 前往 GitHub 仓库 / GitHub Repo
+              🐙 GitHub Repo
             </a>
           )}
         </div>
