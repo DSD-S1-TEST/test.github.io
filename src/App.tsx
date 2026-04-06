@@ -5,6 +5,8 @@ import NewsList from './pages/NewsList';
 import NewsDetail from './pages/NewsDetail';
 import MemberList from './pages/MemberList';
 import MemberDetail from './pages/MemberDetail';
+import ReleaseList from './pages/ReleaseList';
+import ReleaseDetail from './pages/ReleaseDetail';
 import './index.css';
 
 function Navbar() {
@@ -26,6 +28,7 @@ function Navbar() {
       <Link className={`nav-link ${isActive('/')}`} to="/">[ HOME ]</Link>
       <Link className={`nav-link ${isActive('/progress')}`} to="/progress">[ PROGRESS ]</Link>
       <Link className={`nav-link ${isActive('/news')}`} to="/news">[ NEWS ]</Link>
+      <Link className={`nav-link ${isActive('/releases')}`} to="/releases">[ RELEASES ]</Link>
       <Link className={`nav-link ${isActive('/members')}`} to="/members">[ MEMBERS ]</Link>
     </nav>
   );
@@ -41,6 +44,8 @@ export default function App() {
           <Route path="/progress" element={<Progress />} />
           <Route path="/news" element={<NewsList />} />
           <Route path="/news/:id" element={<NewsDetail />} />
+          <Route path="/releases" element={<ReleaseList />} />
+          <Route path="/releases/:id" element={<ReleaseDetail />} />
           <Route path="/members" element={<MemberList />} />
           <Route path="/members/:id" element={<MemberDetail />} />
         </Routes>

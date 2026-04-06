@@ -14,6 +14,15 @@ export interface MemberAttributes {
   skills: string;
 }
 
+export interface ReleaseAttributes {
+  title: string;
+  date: string;
+  publisher: string;
+  summary: string;
+  pdf_url?: string;
+  github_url?: string;
+}
+
 export function parseFrontMatter<T>(raw: string) {
   return fm<T>(raw);
 }
