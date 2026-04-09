@@ -1,5 +1,5 @@
 gantt
-    title DSD-S1-TEST Development Schedule
+    title DSD-TEAM-S1 Development Schedule
     dateFormat  YYYY-MM-DD
     axisFormat  %m-%d
 

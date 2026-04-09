@@ -1,6 +1,6 @@
-# DSD-S1-TEST Frontend
+# DSD-TEAM-S1 Frontend
 
-Welcome to the **DSD-S1-TEST** development hub.  
+Welcome to the **DSD-TEAM-S1** development hub.  
 This site is powered by static Markdown files for efficient collaboration.
 
 ## Project Introduction
