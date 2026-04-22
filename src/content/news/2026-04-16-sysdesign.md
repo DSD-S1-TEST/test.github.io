@@ -1,3 +1,10 @@
+---
+title: "System Design 1.1"
+date: "2026-04-16"
+author: "Haoqi Sheng"
+summary: "Technical architecture and communication protocols for the DSD-S1 wireless joint motion capture system."
+---
+
 # System Design 1.1
 
 **This document is currently under review by all teams.**
