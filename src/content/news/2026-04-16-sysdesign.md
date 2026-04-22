@@ -1,5 +1,5 @@
 ---
-title: "Milestone Reached: System Design 1.1 Finalized"
+title: "Milestone Reached: System Design 1.2 Finalized"
 date: "2026-04-16"
 author: "Haoqi Sheng"
 summary: "We have streamlined our system architecture to a 'Data Tunnel' model, focusing on high-throughput raw byte stream acquisition and robust persistent storage."
