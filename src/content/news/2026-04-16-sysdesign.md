@@ -1,8 +1,8 @@
 ---
-title: "System Design 1.1"
+title: "Finalization of System Architecture and Protocols"
 date: "2026-04-16"
 author: "Haoqi Sheng"
-summary: "Technical architecture and communication protocols for the DSD-S1 wireless joint motion capture system."
+summary: "We have completed the System Design 1.1 document, establishing the core data flow and IF1 communication interfaces for our project."
 ---
 
 # System Design 1.1
