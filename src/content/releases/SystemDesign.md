@@ -1,7 +1,7 @@
 ---
 title: "System Design 1.2: Data Tunnel Architecture"
 date: "2026-04-22"
-author: "Haoqi Sheng"
+publisher: "Haoqi Sheng"
 summary: "We have finalized the DSD-S1 technical architecture, focusing on a high-throughput 'Data Tunnel' with asynchronous buffering for raw IMU data acquisition."
 ---
 
