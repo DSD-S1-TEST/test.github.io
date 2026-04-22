@@ -1,14 +1,14 @@
 ---
-title: "Finalization of System Architecture and Protocols"
+title: "Milestone Reached: System Design 1.1 Finalized"
 date: "2026-04-16"
 author: "Haoqi Sheng"
-summary: "We have completed the System Design 1.1 document, establishing the core data flow and IF1 communication interfaces for our project."
+summary: "We have streamlined our system architecture to a 'Data Tunnel' model, focusing on high-throughput raw byte stream acquisition and robust persistent storage."
 ---
 
-# Finalization of System Architecture and Protocols
+# Strategic Pivot to a Streamlined Data Tunnel
 
-Building on the foundation laid by our Software Requirements Specification, our cross-cultural team has successfully completed the System Design 1.1 document for the wireless joint motion capture system.
+Following ongoing technical evaluations, our team has officially released the System Design 1.2 update for the DSD-S1 wireless joint motion capture system. 
 
-This crucial milestone translates our core requirements into a concrete technical architecture. It explicitly defines the end-to-end data flow, the core technology stack, and the critical IF1 Interface Contract—ensuring seamless communication between our physical sensor nodes and the backend data processing services for Sprint 1.
+This revision introduces a strategic pivot in our engineering approach. We have streamlined the intermediate layer into a highly efficient "Data Tunnel." By temporarily decoupling real-time semantic parsing from the acquisition process, the architecture is now laser-focused on our core immediate goals: managing stable Bluetooth (BLE) connections, buffering pure raw byte streams, and ensuring zero-loss persistent storage for robust offline analysis.
 
-👉 [Click here to review the full System Design 1.1 Document](#/releases/SystemDesign)
+👉 [Click here to review the updated System Design 1.2 Document](#/releases/SystemDesign)

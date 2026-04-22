@@ -1,161 +1,71 @@
 ---
-title: "System Design 1.1"
-date: "2026-04-16"
+title: "System Design 1.2: Data Tunnel Architecture"
+date: "2026-04-22"
 author: "Haoqi Sheng"
-summary: "Technical architecture and communication protocols for the DSD-S1 wireless joint motion capture system."
+summary: "We have finalized the DSD-S1 technical architecture, focusing on a high-throughput 'Data Tunnel' with asynchronous buffering for raw IMU data acquisition."
 ---
 
-# System Design 1.1
+# System Design 1.2
 
-**This document is currently under review by all teams.**
+**Status:** Under review by all teams.
 
 **Project Team:** Zhihang Yu, Derui Tang, Haoqi Sheng, Mofan Xu, Silva André
 
-Revision History:
+## Revision History
 
 | Date | Description |
 | :--- | :--- |
-| April 9 | Initial document structure drafted (0.1) with system decomposition  |
-| April 12 | Content expanded based on core project requirements (0.2)  |
-| April 15 | Refined against SRS; integrated use cases, IF1 contract, and actor flows (1.0)  |
-| April 16 | Integrated functional mapping, data flow steps, and specific technology selections (1.1)  |
+| April 6 | Project officially started; Software Requirements Specification (SRS) completed |
+| April 9 | Initial document structure drafted (0.1) with system decomposition |
+| April 12 | Content expanded based on core project requirements (0.2) |
+| April 15 | Refined against SRS; integrated use cases and initial IF1 contract (1.0) |
+| April 16 | Integrated functional mapping, data flow steps, and specific technology selections (1.1) |
+| April 22 | **Architecture Simplified:** Shifted focus to a "Data Tunnel" model for raw byte stream acquisition and persistent storage, removing real-time parsing logic (1.2) |
 
-## Introduction
+[toc]
 
-This document describes the system design for a wireless joint motion capture system developed as part of an international collaborative course project. The system focuses on wireless sensor implementation, communication protocol design, and reliable transmission of motion data.
+## 1. Introduction
 
-The document reflects the consensus of teams on the modular division, and defines how modules communicate with each other, providing a crucial basis of module design for developers and testers across teams. It is intended to be read alongside the Software Requirements Specification (SRS), which defines use cases and the IF1 Interface Contract as the Sprint 1 deliverable.
+This document describes the system architecture for the DSD-S1 wireless joint motion capture system. Based on recent project scope adjustments, the current primary objective is to establish a high-efficiency "Data Tunnel." 
 
-The specifications in each section under the *New in version x.y* is added since this version. Lines starting with *Changed in version x.y* state how the specifications above this line changed in this version.
+In this phase, the system will not perform real-time semantic parsing of the sensor bits. Instead, it acts as a universal data acquisition platform responsible for establishing a stable Bluetooth connection, receiving the raw byte stream from the sensors, and writing it directly to persistent storage for future offline analysis.
 
-## Functional requirement clustering
+## 2. Functional Architecture
 
-A module takes charge respectively of a cluster of requirements.
+To achieve the "Connect-Acquire-Store" objective, the system is simplified into three core modules:
 
-A **component diagram** shows here the clusters.
+### 2.1 Sensor Layer (Acquisition)
+* **Responsibility:** Generate raw motion data via IMU sensors.
+* **Interaction:** Broadcasts availability via Bluetooth and waits for the host to establish the data tunnel.
 
-![]()
+### 2.2 Data Relay Layer (Intermediate / IF1)
+* **Responsibility:** * Manage the Bluetooth Low Energy (BLE) connection lifecycle (scan, connect, disconnect, auto-reconnect).
+  * Act as a transparent proxy, receiving the pure byte stream.
+  * **Traffic Buffering:** Implement an in-memory queue/buffer to prevent Bluetooth packet loss caused by downstream disk I/O latency.
+* **IF1 Interface Contract:** In this version, IF1 is defined purely as a **Streaming Interface**. The system is agnostic to the specific bit meanings (e.g., headers, payload structures) within the packets; it only guarantees the sequential integrity and lossless transfer of the bytes received.
 
-The system is decomposed into three primary layers: a **Front-end** layer handling user interaction (registration, login, sensor control, and data visualization) via IMU and mobile devices; an **Intermediate** layer managing the wireless communication protocol, session management, and request routing; and a **Back-end** layer responsible for user account management, data processing, joint angle calibration, and motion data storage. Sensor firmware runs on microcontrollers at the hardware layer and feeds data upward through the communication stack.
+### 2.3 Storage Layer (Back-end)
+* **Responsibility:**
+  * **Persistent Storage:** Stream the received bytes asynchronously into local files or a database.
+  * **Session Management:** Record metadata for each recording session (e.g., start timestamp, duration, sensor MAC address).
 
-The use cases defined in the SRS map to these layers as follows:
+## 3. Core Data Flow
 
-| Use Case | Primary Layer(s) |
-| -------- | ---------------- |
-| 1.1 User Register | Front-end, Back-end |
-| 1.2 User Login | Front-end, Back-end |
-| 1.3 Connect Sensor | Front-end, Intermediate |
-| 1.4 Calibrate Joint Angle | Back-end, Hardware |
-| 1.5 Transmit Motion Data | Intermediate, Back-end |
+The end-to-end data pipeline operates strictly sequentially:
+1. **Link Establishment:** The host program handshakes with the sensor via BLE.
+2. **Streaming:** The sensor continuously pushes pure raw bytes over the wireless connection.
+3. **Buffering & Relay:** The host program receives the byte stream and immediately pushes it into a memory buffer.
+4. **Disk I/O:** An asynchronous background task flushes the buffer to the storage device, ensuring the data acquisition thread is never blocked.
 
-### Front-end
+## 4. Technical Route Selection
 
-*Version 1.1*
+* **Hardware:** ESP32 microcontrollers with integrated IMU sensors.
+* **Communication:** Bluetooth Low Energy (BLE) operating in Serial Pass-through (UART) mode.
+* **Host Application:** Python (utilizing asynchronous libraries like `bleak` for BLE and `asyncio` for I/O) or Node.js. Both are chosen for their strong asynchronous non-blocking event loops.
+* **Storage Format:** Raw binary files (`.bin`) for maximum write speed, or a high-throughput time-series database optimized for byte arrays.
 
-The front-end interacts with human users via IMU devices and mobile devices. It is responsible for user account flows, sensor connection controls, real-time joint motion visualization, and surfacing system status.
+## 5. Non-Functional Requirements
 
-#### Functional requirement list
-
-The requirements answered by this component:
-- Present registration and login forms; collect and validate user credentials (UC 1.1, 1.2)
-- Display connection controls to power on sensors and initiate the wireless handshake (UC 1.3)
-- Show connection status ("Connected" / error message) (UC 1.3)
-- Display real-time motion capture data streamed from the intermediate layer (UC 1.5)
-- Notify users of transmission errors, packet loss, or sensor disconnection (UC 1.5)
-
-### Intermediate (Communication Protocol & IF1 Contract)
-
-*Version 1.1*
-
-The web server acts as an intermediate to receive requests, enforce the wireless communication protocol, and route data. It is the primary owner of the **IF1 Interface Contract** (Sprint 1 deliverable).
-
-#### Functional requirement list
-
-- Receive and forward user account requests to the back-end (UC 1.1, 1.2)
-- Detect sensor broadcast signals and initiate the wireless handshake (UC 1.3)
-- Confirm data packet format and sampling rate with the sensor (UC 1.3)
-- Receive data packets from sensor firmware and route them without loss or corruption (UC 1.5)
-
-#### IF1 Interface Contract — Communication Protocol Design
-
-**Data Packet Format**
-
-Each packet transmitted from the sensor shall contain:
-
-| Field | Description |
-| ----- | ----------- |
-| Header | Packet start identifier |
-| Device ID | Unique identifier of the sensor node |
-| Timestamp | Capture time in milliseconds since session start |
-| Sequence Number | Monotonically increasing counter for loss detection |
-| Joint Angle Payload | Calibrated angle values (one per tracked joint) |
-| Checksum / CRC | Error-detection field covering the full packet |
-
-**Sampling Rate**
-The default target rate is 50Hz, configurable per session within hardware limits. A higher rate improves accuracy, while a lower rate saves bandwidth and power.
-
-**Error Handling Mechanisms**
-
-| Fault Condition | System Response |
-| --------------- | --------------- |
-| Packet loss (gap in sequence) | Log loss event; request retransmission |
-| Corrupted packet (CRC mismatch)| Discard packet; log error; request retransmission |
-| Sensor signal lost | Auto-reconnect attempt; notify front-end after timeout |
-| Reconnection failure | Display error message to user; end session gracefully |
-
-### Back-end
-
-*Version 1.1*
-
-The back-end is responsible for user account management, receiving/decoding motion data, performing joint angle calibration, and persisting results.
-
-#### Functional requirement list
-- Validate uniqueness of new user accounts and enforce password format regulations (UC 1.1)
-- Authenticate returning users against stored credentials (UC 1.2)
-- Perform joint angle calibration algorithms on raw IMU sensor data (UC 1.4)
-- Store processed motion data for session replay and analysis (UC 1.5)
-
-#### Hardware Integration Note
-Since physical sensors are currently only available in China, hardware-related tasks — including sensor firmware implementation, hardware drivers, and microcontroller integration — are primarily handled by China-based team members (Programmers CN).
-
-## Data Flow Architecture
-
-*New in version 1.1*
-
-The overarching end-to-end data flow operates sequentially as follows:
-1. **Acquisition:** Sensor collects raw motion data.
-2. **Encoding:** Sensor firmware encodes data into the IF1 defined packet structure.
-3. **Transmission:** Data is transmitted via the selected wireless protocol.
-4. **Validation:** Server (Intermediate layer) receives and validates the packet (CRC, Sequence check).
-5. **Processing & Storage:** Back-end parses data, calibrates angles, and stores the results in the database.
-6. **Delivery:** Front-end retrieves data via API.
-7. **Visualization:** Real-time motion is rendered to the user interface.
-
-## Non-functional requirement response
-
-*Version 1.0*
-
-- **Reliability**: Protocol must handle packet loss gracefully through CRC checking and retransmission.
-- **Latency**: End-to-end latency (sensor capture to display) should target <100ms for real-time visualization.
-- **Scalability**: Architecture should support multiple simultaneous IMU sensor nodes.
-- **Security**: User account credentials must be transmitted securely (HTTPS); password formatting enforced.
-- **Cross-cultural collaboration**: Documentation must be accessible across time zones (China and Portugal).
-
-## Technical route selection
-
-*Version 1.1*
-
-The following technical choices have been identified:
-- **Microcontroller platform**: ESP32 (or similar) supporting IMU sensor interfacing and wireless transmission.
-- **Wireless protocol**: Bluetooth Low Energy (BLE) for low power, or Wi-Fi (UDP/TCP) for high throughput. Final selection codified in IF1.
-- **Sensor firmware**: C/C++ for hardware interaction, calibration, and serialization.
-- **Back-end services**: Python (FastAPI) or Node.js. Database utilizing PostgreSQL or a Time-series DB for motion tracking.
-- **Front-end platform**: Web-based UI built with React or Vue.
-
-## Future Improvements
-
-*New in version 1.1*
-
-- Add motion prediction algorithms for latency compensation.
-- Integrate 3D skeletal visualization on the front-end dashboard.
-- Optimize deep sleep cycles for power consumption on physical sensors.
+* **High Throughput Reliability:** The intermediate buffer must be adequately sized to handle the maximum expected data rate (e.g., 50Hz+ sampling) without overflowing during temporary disk write delays.
+* **Concurrency:** The Bluetooth receiving thread and the File I/O writing thread must be strictly decoupled to maintain real-time acquisition performance.
+* **Resilience:** The host application must gracefully handle unexpected Bluetooth disconnections, securely closing the current file before attempting to reconnect.
