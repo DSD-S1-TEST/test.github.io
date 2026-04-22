@@ -1,66 +1,70 @@
 ---
-title: "System Design 1.1"
-date: "2026-04-16"
-publisher: "Haoqi Sheng"
-summary: "Technical architecture and communication protocols for the DSD-S1 wireless joint motion capture system."
+title: "System Design 1.2: Data Tunnel Architecture"
+date: "2026-04-22"
+author: "Haoqi Sheng"
+summary: "We have finalized the DSD-S1 technical architecture, focusing on a high-throughput 'Data Tunnel' with asynchronous buffering for raw IMU data acquisition."
 ---
 
-# System Design 1.2
+DATE: 2026-04-22 | AUTHOR: Haoqi Sheng
 
-**Status:** Under review by all teams.
+## Architecture Milestone: System Design 1.2 Finalized
 
-**Project Team:** Zhihang Yu, Derui Tang, Haoqi Sheng, Mofan Xu, Silva André
+Following the completion of the SRS on April 6, our team has progressed from initial frameworking to a finalized "Data Tunnel" architecture. This design prioritizes the sequential integrity of raw sensor data and robust asynchronous storage.
 
-## Revision History
+<details>
+<summary style="cursor: pointer; color: #00e5ff; font-weight: bold;">[ 点击展开查看详细设计方案 / Read More ]</summary>
 
-| Date | Description |
-| :--- | :--- |
-| April 15 | Refined against SRS; integrated use cases and initial IF1 contract (1.0) |
-| April 16 | Integrated functional mapping, data flow steps, and specific technology selections (1.1) |
-| April 22 | **Architecture Simplified:** Shifted focus to a "Data Tunnel" model for raw byte stream acquisition and persistent storage, removing real-time parsing logic (1.2) |
+<br>
 
-## 1. Introduction
+### 1. Document Corrections & Refinements
+The following updates were implemented based on the latest review phase to ensure clarity in medical and technical roles:
 
-This document describes the system architecture for the DSD-S1 wireless joint motion capture system. Based on recent project scope adjustments, the current primary objective is to establish a high-efficiency "Data Tunnel." 
+| LOCATION | BEFORE | AFTER | REASON |
+| :--- | :--- | :--- | :--- |
+| Right-side actor | Patient | Doctor | The M2 Dashboard serves Medical Professionals; the actor now reflects the actual user. |
+| S2 → V1 data flow | Formal data | Format data | More accurately describes the 45-value CSV standard output for AI analysis. |
+| V1 → V2 DB | Recognition result | Analysis results + Batch Format data | V1 now produces both real-time insights and batch-processed data for storage. |
+| V2 DB ↔ M2 | Patient log | Patient log + Doctor Feedback | Added bidirectional flow to reflect the doctor's active role in treatment adjustments. |
+| S2-01 ↔ S2-02 | Single arrow | Two unidirectional arrows | Separated "Simulated raw IMU packet" and "request" for independent traceability. |
 
-In this phase, the system will not perform real-time semantic parsing of the sensor bits. Instead, it acts as a universal data acquisition platform responsible for establishing a stable Bluetooth connection, receiving the raw byte stream from the sensors, and writing it directly to persistent storage for future offline analysis.
+### 2. Revised Data Flow Diagram (DFD)
+The system is partitioned into the **App (Client)**, **Server (Backend)**, and **Monitoring (Dashboard)** layers.
 
-## 2. Functional Architecture
+```mermaid
+graph LR
+    %% Entities
+    Patient[/Patient/]
+    Doctor[/Doctor/]
 
-To achieve the "Connect-Acquire-Store" objective, the system is simplified into three core modules:
+    %% App Subsystem
+    subgraph App
+        S1((S1 Sensor))
+        M1((M1 AppFrontend))
+        S2((S2 Data Acq.))
+    end
 
-### 2.1 Sensor Layer (Acquisition)
-* **Responsibility:** Generate raw motion data via IMU sensors.
-* **Interaction:** Broadcasts availability via Bluetooth and waits for the host to establish the data tunnel.
+    %% Server Subsystem
+    subgraph Server
+        V1((V1 AI))
+        V2((V2 DB))
+    end
 
-### 2.2 Data Relay Layer (Intermediate / IF1)
-* **Responsibility:** * Manage the Bluetooth Low Energy (BLE) connection lifecycle (scan, connect, disconnect, auto-reconnect).
-  * Act as a transparent proxy, receiving the pure byte stream.
-  * **Traffic Buffering:** Implement an in-memory queue/buffer to prevent Bluetooth packet loss caused by downstream disk I/O latency.
-* **IF1 Interface Contract:** In this version, IF1 is defined purely as a **Streaming Interface**. The system is agnostic to the specific bit meanings (e.g., headers, payload structures) within the packets; it only guarantees the sequential integrity and lossless transfer of the bytes received.
+    M2((M2 Dashboard))
 
-### 2.3 Storage Layer (Back-end)
-* **Responsibility:**
-  * **Persistent Storage:** Stream the received bytes asynchronously into local files or a database.
-  * **Session Management:** Record metadata for each recording session (e.g., start timestamp, duration, sensor MAC address).
-
-## 3. Core Data Flow
-
-The end-to-end data pipeline operates strictly sequentially:
-1. **Link Establishment:** The host program handshakes with the sensor via BLE.
-2. **Streaming:** The sensor continuously pushes pure raw bytes over the wireless connection.
-3. **Buffering & Relay:** The host program receives the byte stream and immediately pushes it into a memory buffer.
-4. **Disk I/O:** An asynchronous background task flushes the buffer to the storage device, ensuring the data acquisition thread is never blocked.
-
-## 4. Technical Route Selection
-
-* **Hardware:** ESP32 microcontrollers with integrated IMU sensors.
-* **Communication:** Bluetooth Low Energy (BLE) operating in Serial Pass-through (UART) mode.
-* **Host Application:** Python (utilizing asynchronous libraries like `bleak` for BLE and `asyncio` for I/O) or Node.js. Both are chosen for their strong asynchronous non-blocking event loops.
-* **Storage Format:** Raw binary files (`.bin`) for maximum write speed, or a high-throughput time-series database optimized for byte arrays.
-
-## 5. Non-Functional Requirements
-
-* **High Throughput Reliability:** The intermediate buffer must be adequately sized to handle the maximum expected data rate (e.g., 50Hz+ sampling) without overflowing during temporary disk write delays.
-* **Concurrency:** The Bluetooth receiving thread and the File I/O writing thread must be strictly decoupled to maintain real-time acquisition performance.
-* **Resilience:** The host application must gracefully handle unexpected Bluetooth disconnections, securely closing the current file before attempting to reconnect.
+    %% Data Flows
+    Patient -- Body movement --> S1
+    Patient -- Connection request --> M1
+    M1 -- Connection request --> S1
+    M1 -- Start/Close session --> S2
+    S1 -- Raw IMU packet --> S2
+    S2 -- Format data --> V2
+    V2 -- Doctor Feedback --> M1
+    V2 -- Patient log --> M2
+    M2 -- Doctor Feedback --> V2
+    M2 -- Patient log --> Doctor
+    Doctor -- Doctor Feedback --> M2
+    
+    %% AI Processing
+    V2 --> V1
+    V1 -- Analysis results --> V2
+    V1 -- Batch Format data --> V2
