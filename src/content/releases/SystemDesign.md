@@ -58,16 +58,16 @@ The system is simplified into three core modules reflecting the **Connect–Acqu
 The end-to-end data pipeline operates strictly sequentially:
 
 ```
- ┌──────────────┐   BLE (raw bytes)   ┌──────────────────┐   async flush   ┌─────────────┐
+┌──────────────┐   BLE (raw bytes)   ┌──────────────────┐   async flush   ┌─────────────┐
  │  S1  Sensor  │ ──────────────────► │  Data Relay      │ ──────────────► │  Storage    │
- │  (   IMU   ) │                     │  (Memory Buffer) │                 │  (.bin / DB)│
- └──────────────┘                     └──────────────────┘                 └─────────────┘
-       ▲
-       │  BLE scan & connect
-  ┌────┴─────────┐
-  │  Host App    │
-  │  (M1 / User) │
-  └──────────────┘
+ │  (ESP32/IMU) │                     │  (Memory Buffer) │                 │  (.bin / DB)│
+ └──────────────┘                     └──────────────────┘                 └──────┬──────┘
+       ▲                                                                          │
+       │  BLE scan & connect                                                      │ 
+  ┌────┴─────────┐                                                         ┌──────▼──────┐
+  │  Host App    │                                                         │     S2      │
+  │  (M1 / User) │                                                         │  Data Acq.  │
+  └──────────────┘                                                         └─────────────┘
 ```
 
 1. **Link Establishment:** The host program handshakes with the sensor via BLE.
