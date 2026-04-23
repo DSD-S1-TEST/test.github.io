@@ -58,7 +58,7 @@ The system is simplified into three core modules reflecting the **Connect–Acqu
 The end-to-end data pipeline operates strictly sequentially:
 
 ```
-┌──────────────┐   BLE (raw bytes)   ┌──────────────────┐   async flush   ┌─────────────┐
+ ┌──────────────┐   BLE (raw bytes)   ┌──────────────────┐   async flush   ┌─────────────┐
  │  S1  Sensor  │ ──────────────────► │  Data Relay      │ ──────────────► │  Storage    │
  │  (ESP32/IMU) │                     │  (Memory Buffer) │                 │  (.bin / DB)│
  └──────────────┘                     └──────────────────┘                 └──────┬──────┘
