@@ -40,7 +40,7 @@ The system is simplified into three core modules reflecting the **Connect–Acqu
 
 - **Responsibility:** Generate raw motion data via IMU sensors.
 - **Interaction:** Broadcasts availability via Bluetooth and waits for the host to establish the data tunnel.
-- **Hardware:** ESP32 microcontrollers with integrated IMU sensors.
+- **Hardware:** 6 IMU sensors.
 
 ### 2.2 Data Relay Layer (Intermediate / IF1)
 
