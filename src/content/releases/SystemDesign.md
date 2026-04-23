@@ -60,7 +60,7 @@ The end-to-end data pipeline operates strictly sequentially:
 ```
  ┌──────────────┐   BLE (raw bytes)   ┌──────────────────┐   async flush   ┌─────────────┐
  │  S1  Sensor  │ ──────────────────► │  Data Relay      │ ──────────────► │  Storage    │
- │  (ESP32/IMU) │                     │  (Memory Buffer) │                 │  (.bin / DB)│
+ │  (   IMU   ) │                     │  (Memory Buffer) │                 │  (.bin / DB)│
  └──────────────┘                     └──────────────────┘                 └─────────────┘
        ▲
        │  BLE scan & connect
