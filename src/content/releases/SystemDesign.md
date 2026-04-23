@@ -81,7 +81,7 @@ The end-to-end data pipeline operates strictly sequentially:
 
 | Concern | Selection | Rationale |
 | :------ | :-------- | :-------- |
-| Hardware | ESP32 + IMU | Integrated BLE; available with China-based team members |
+| Hardware | IMU         | Integrated BLE; available with China-based team members |
 | Communication | BLE — Serial Pass-through (UART) mode | Low overhead; suitable for continuous byte-stream |
 | Host Application | Python (`bleak` + `asyncio`) or Node.js | Strong async/non-blocking event loops for concurrent BLE and I/O |
 | Storage Format | Raw binary `.bin` or high-throughput time-series DB | Maximum write speed; no encoding overhead |
