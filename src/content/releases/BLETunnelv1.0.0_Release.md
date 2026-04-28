@@ -3,6 +3,7 @@ title: "v1.0.0: The Async BLE Concurrency Engine"
 date: "2026-04-28"
 publisher: "Haoqi Sheng"
 summary: "An initial production release detailing the asynchronous BLE tunnel architecture, the dual-protocol decoding engine, and fault-tolerant multi-sensor data acquisition."
+latest:true
 ---
 
 # Release Notes — v1.0.0
