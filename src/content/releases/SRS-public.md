@@ -1,5 +1,5 @@
 ---
-title: "Software Requirements Specification"
+title: "Software Requirements Specification version 0.2"
 date: "2026-04-18"
 publisher: "Admin"
 summary: "An updated Software Requirements Specification detailing the Data Tunnel architecture, IF1 streaming contract, and resilient IMU data acquisition."
