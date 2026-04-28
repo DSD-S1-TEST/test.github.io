@@ -5,6 +5,7 @@ export interface NewsAttributes {
   date: string;
   author: string;
   summary: string;
+  latest?: boolean;
 }
 
 export interface MemberAttributes {
@@ -19,6 +20,7 @@ export interface ReleaseAttributes {
   date: string;
   publisher: string;
   summary: string;
+  latest?: boolean;
   pdf_url?: string;
   github_url?: string;
 }

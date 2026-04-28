@@ -21,7 +21,22 @@ export default function ReleaseList() {
         {releases.map(release => (
           <Link key={release.id} to={`/releases/${release.id}`} className="card hoverable" style={{ display: 'block', padding: '1.5rem', textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '1rem' }}>
-              <h2 style={{ margin: 0, fontSize: '1.25rem', color: 'var(--primary-glow)' }}>{release.title}</h2>
+              <h2 style={{ margin: 0, fontSize: '1.25rem', color: 'var(--primary-glow)', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                {release.title}
+                {release.latest && (
+                  <span style={{ 
+                    fontSize: '0.6em', 
+                    backgroundColor: '#ff003c', 
+                    color: '#fff', 
+                    padding: '2px 6px', 
+                    borderRadius: '4px',
+                    fontWeight: 'bold',
+                    textShadow: 'none'
+                  }}>
+                    LATEST
+                  </span>
+                )}
+              </h2>
               <span style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>{release.date}</span>
             </div>
             <p style={{ marginBottom: '1rem', color: 'var(--text-color)' }}>{release.summary}</p>

@@ -26,7 +26,22 @@ export default function NewsList() {
           <div className="cyber-font" style={{ fontSize: '0.8em', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>
             DATE: {item.date} | AUTHOR: {item.author}
           </div>
-          <h2 style={{ margin: '0 0 1rem 0' }}>{item.title}</h2>
+          <h2 style={{ margin: '0 0 1rem 0', display: 'flex', alignItems: 'center', gap: '10px' }}>
+            {item.title}
+            {item.latest && (
+              <span style={{ 
+                fontSize: '0.6em', 
+                backgroundColor: 'var(--primary-glow)', 
+                color: '#000', 
+                padding: '2px 6px', 
+                borderRadius: '4px',
+                fontWeight: 'bold',
+                textShadow: 'none'
+              }}>
+                LATEST
+              </span>
+            )}
+          </h2>
           <p style={{ color: 'var(--text-muted)' }}>{item.summary}</p>
           <div style={{ color: 'var(--primary-glow)', fontSize: '0.9em', marginTop: '1rem' }}>
             [ Read More ]
