@@ -1,11 +1,11 @@
-# Release Notes — v1.0.0
-
-**Date:** April 28, 2026
-**Module:** `dsd_s1_ble_tunnel` (`IF-S1-S2 Provider`)
-**Contributors:** Zhihang Yu, Derui Tang, Haoqi Sheng, Mofan Xu, Silva André
-
+---
+title: "v1.0.0: The Async BLE Concurrency Engine"
+date: "2026-04-28"
+publisher: "Haoqi Sheng"
+summary: "An initial production release detailing the asynchronous BLE tunnel architecture, the dual-protocol decoding engine, and fault-tolerant multi-sensor data acquisition."
 ---
 
+# Release Notes — v1.0.0
 ## Overview
 
 `dsd_s1_ble_tunnel` is the initial production release of the **IF-S1-S2 provider** for the DSD-S1 project. It establishes the full communication pipeline between up to six WitMotion BLE inertial measurement units and the S2 data layer, delivering timestamped, normalised `SensorSample` objects through a pair of polling methods — `s1.sensor.read()` and `s1.sensor.status()` — as defined in sections 2.1.3 and 2.1.4 of the interface specification.
