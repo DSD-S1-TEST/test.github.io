@@ -10,4 +10,4 @@ latest: true
 
 In accordance with the IF-S1-S2 interface specifications, we have successfully integrated the new Bluetooth Low Energy (BLE) communication tunnel module. This production-ready release aligns with our multi-sensor concurrency goals, utilizing a decoupled asynchronous worker model and a self-healing parsing engine to provide a robust, continuous data stream for the S2 processing layer.
 
-For more details on the technical architecture and configuration parameters, please review the complete release document here: [v1.0.0 Release Notes](#/releases)
+For more details on the technical architecture and configuration parameters, please review the complete release document here: [v1.0.0 Release Notes](#/releases/BLETunnelv1.0.0_Release)
