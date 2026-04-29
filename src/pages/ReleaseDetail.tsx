@@ -1,10 +1,32 @@
 import { useParams, Link } from 'react-router-dom';
+import { useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import mermaid from 'mermaid';
 import { parseFrontMatter } from '../utils/mdParser';
 import type { ReleaseAttributes } from '../utils/mdParser';
 
 const releaseFiles = import.meta.glob('../content/releases/*.md', { query: '?raw', import: 'default', eager: true });
+
+const Mermaid = ({ chart }: { chart: string }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'loose' });
+    if (containerRef.current) {
+      const id = `mermaid-${Math.random().toString(36).substr(2, 9)}`;
+      mermaid.render(id, chart).then(({ svg }) => {
+        if (containerRef.current) {
+          containerRef.current.innerHTML = svg;
+        }
+      }).catch(e => {
+        console.error("Mermaid rendering error:", e);
+      });
+    }
+  }, [chart]);
+
+  return <div ref={containerRef} className="mermaid-container" style={{ display: 'flex', justifyContent: 'center', margin: '2rem 0' }} />;
+};
 
 export default function ReleaseDetail() {
   const { id } = useParams();
@@ -48,7 +70,27 @@ export default function ReleaseDetail() {
       )}
 
       <div style={{ lineHeight: '1.6' }}>
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>{body}</ReactMarkdown>
+        <ReactMarkdown 
+          remarkPlugins={[remarkGfm]}
+          components={{
+            a(props) {
+              const { node, href, children, ...rest } = props;
+              if (href && href.endsWith('.md')) {
+                return <a href={href} download {...rest}>{children}</a>;
+              }
+              return <a href={href} {...rest}>{children}</a>;
+            },
+            code({ node, className, children, ...props }: any) {
+              const match = /language-(\w+)/.exec(className || '');
+              if (match && match[1] === 'mermaid') {
+                return <Mermaid chart={String(children).replace(/\n$/, '')} />;
+              }
+              return <code className={className} {...props}>{children}</code>;
+            }
+          }}
+        >
+          {body}
+        </ReactMarkdown>
       </div>
     </div>
   );
