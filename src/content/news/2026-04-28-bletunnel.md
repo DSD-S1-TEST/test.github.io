@@ -1,7 +1,7 @@
 ---
 title: "High-Performance BLE Tunnel Integrated"
 date: "2026-04-28"
-author: "Haoqi Sheng, Admin"
+author: "Haoqi Sheng, Mofan Xu, Admin"
 summary: "An initial production release detailing the asynchronous BLE tunnel architecture, the dual-protocol decoding engine, and fault-tolerant multi-sensor data acquisition."
 latest: true
 ---
